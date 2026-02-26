@@ -1,0 +1,370 @@
+Here is a **production-grade backend generation prompt** you can paste into **ChatGPT, GitHub Copilot, Cursor, Replit AI, or any AI coding assistant** to generate a complete backend that supports *all features of your AgroSoil DSS website*.
+
+This is structured for **FastAPI + PostgreSQL + Scikit-learn + JWT + Docker (enterprise-ready)**.
+
+---
+
+# 🚀 BACKEND GENERATION PROMPT
+
+## AgroSoil DSS – Production-Ready Backend API
+
+---
+
+## 📌 MASTER PROMPT
+
+> Build a complete, production-ready backend API for a web application called:
+>
+> **“AgroSoil DSS – Web-Based Soil Nutrient Decision Support System”**
+>
+> The backend must be built using:
+>
+> * Python 3.11+
+> * FastAPI
+> * PostgreSQL
+> * SQLAlchemy ORM
+> * Pydantic v2
+> * JWT Authentication
+> * Scikit-learn (Random Forest Model)
+> * Dockerized deployment
+>
+> The backend must support authentication, role-based access control, soil prediction, fertilizer recommendation, analytics dashboard, PDF report generation, admin management, dataset upload, and model retraining.
+
+---
+
+# 🏗 SYSTEM ARCHITECTURE
+
+Use **Clean Architecture structure**:
+
+```
+backend/
+│
+├── app/
+│   ├── main.py
+│   ├── config.py
+│   ├── database.py
+│   │
+│   ├── models/
+│   ├── schemas/
+│   ├── routes/
+│   ├── services/
+│   ├── utils/
+│   ├── ml/
+│   ├── core/
+│   └── dependencies/
+│
+├── alembic/
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+# 🔐 AUTHENTICATION SYSTEM
+
+Implement:
+
+* User registration
+* Login (JWT access + refresh tokens)
+* Password hashing (bcrypt)
+* Role-based access (Farmer, Agronomist, Admin)
+* Email verification (mocked)
+* Forgot/reset password
+* Secure token expiration
+
+### User Roles:
+
+* FARMER
+* AGRONOMIST
+* ADMIN
+
+---
+
+# 🗄 DATABASE MODELS (SQLAlchemy)
+
+### User
+
+* id
+* full_name
+* email
+* password_hash
+* role
+* is_active
+* created_at
+
+### SoilTest
+
+* id
+* user_id (FK)
+* ph
+* organic_carbon
+* nitrogen
+* phosphorus
+* potassium
+* soil_texture
+* state
+* lga
+* created_at
+
+### Prediction
+
+* id
+* soil_test_id (FK)
+* predicted_n
+* predicted_p
+* predicted_k
+* soil_health_status
+* fertilizer_recommendation
+* confidence_score
+* created_at
+
+### ModelMetrics
+
+* id
+* model_name
+* accuracy
+* precision
+* recall
+* f1_score
+* rmse
+* trained_at
+
+---
+
+# 🧠 MACHINE LEARNING MODULE
+
+Create `/ml/` folder with:
+
+* train.py
+* predict.py
+* model_loader.py
+* preprocessing.py
+
+Requirements:
+
+* Load pre-trained Random Forest `.pkl`
+* Feature scaling
+* Input validation
+* Return prediction + fertilizer recommendation logic
+* Confidence probability score
+
+API Endpoint:
+
+```
+POST /api/v1/predict
+```
+
+Input:
+
+```json
+{
+  "ph": 6.5,
+  "organic_carbon": 2.1,
+  "nitrogen": 45,
+  "phosphorus": 30,
+  "potassium": 55,
+  "soil_texture": "Loamy"
+}
+```
+
+Output:
+
+```json
+{
+  "predicted_n": 47.2,
+  "predicted_p": 28.4,
+  "predicted_k": 60.1,
+  "soil_health_status": "Moderate",
+  "fertilizer_recommendation": "Apply NPK 20-10-10 at 50kg per hectare",
+  "confidence_score": 0.93
+}
+```
+
+---
+
+# 📊 ANALYTICS ENDPOINTS
+
+Create endpoints for dashboard:
+
+* GET `/api/v1/dashboard/summary`
+* GET `/api/v1/dashboard/trends`
+* GET `/api/v1/dashboard/model-performance`
+* GET `/api/v1/dashboard/prediction-history`
+
+Return aggregated statistics:
+
+* Total users
+* Total soil tests
+* Average NPK levels
+* Prediction trends (monthly)
+
+---
+
+# 📂 ADMIN FEATURES
+
+Admin-only endpoints:
+
+* GET `/api/v1/admin/users`
+* DELETE `/api/v1/admin/user/{id}`
+* GET `/api/v1/admin/predictions`
+* POST `/api/v1/admin/upload-dataset`
+* POST `/api/v1/admin/retrain-model`
+* GET `/api/v1/admin/export-data`
+
+Retrain model must:
+
+* Accept CSV dataset
+* Retrain Random Forest
+* Save new `.pkl`
+* Store metrics in ModelMetrics table
+
+---
+
+# 📄 REPORT GENERATION
+
+Create:
+
+```
+POST /api/v1/report/{prediction_id}
+```
+
+Generate downloadable:
+
+* PDF report
+* Includes user info
+* Soil parameters
+* Prediction results
+* Recommendation
+* Model confidence
+
+Use:
+
+* reportlab
+* Clean formatted layout
+
+---
+
+# 🔐 SECURITY REQUIREMENTS
+
+* JWT authentication
+* OAuth2 password flow
+* Input validation (Pydantic)
+* SQL injection prevention
+* Rate limiting
+* CORS configuration
+* CSRF protection
+* Environment variables for secrets
+
+---
+
+# ⚙ CONFIGURATION
+
+Use `.env` file:
+
+```
+DATABASE_URL=
+SECRET_KEY=
+ALGORITHM=
+ACCESS_TOKEN_EXPIRE_MINUTES=
+```
+
+---
+
+# 🐳 DOCKER REQUIREMENTS
+
+Provide:
+
+### Dockerfile
+
+* Python slim image
+* Install dependencies
+* Expose port 8000
+
+### docker-compose.yml
+
+* FastAPI service
+* PostgreSQL service
+* pgAdmin service
+
+---
+
+# 📦 REQUIREMENTS.TXT
+
+Include:
+
+* fastapi
+* uvicorn
+* sqlalchemy
+* psycopg2-binary
+* pydantic
+* passlib[bcrypt]
+* python-jose
+* scikit-learn
+* pandas
+* reportlab
+* alembic
+* python-multipart
+* python-dotenv
+
+---
+
+# 🧪 TESTING
+
+Include:
+
+* Pytest setup
+* Test authentication
+* Test prediction endpoint
+* Test role-based restrictions
+
+---
+
+# 📘 DOCUMENTATION
+
+Auto-generate:
+
+* OpenAPI documentation
+* Swagger UI
+* Redoc
+
+Include README with:
+
+* Setup instructions
+* Environment configuration
+* Docker instructions
+* Deployment steps (AWS/Azure ready)
+
+---
+
+# 🎯 PERFORMANCE REQUIREMENTS
+
+* Async FastAPI endpoints
+* Efficient DB indexing
+* Model loaded once on startup
+* Clean exception handling
+* Logging system
+
+---
+
+# 🏁 FINAL INSTRUCTION
+
+Generate:
+
+* Complete working backend code
+* Proper folder structure
+* Fully commented files
+* Production-ready best practices
+* Ready to connect to React frontend
+
+---
+
+If you'd like, I can now:
+
+* ✅ Generate the **actual backend starter code**
+* ✅ Generate the **ML training script**
+* ✅ Create the **database ERD diagram**
+* ✅ Create full Docker configuration files
+* ✅ Generate deployment script for AWS or Azure**
+
+Tell me what you want next.
