@@ -9,6 +9,7 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/new-test", label: "New Soil Test", icon: Beaker },
     { href: "/results", label: "Recent Results", icon: FileBarChart },
+    { href: "/admin", label: "Admin Panel", icon: Settings },
   ];
 
   return (

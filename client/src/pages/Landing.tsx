@@ -57,7 +57,7 @@ export default function Landing() {
                   </Button>
                 </Link>
                 <Link href="/dashboard">
-                  <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-base w-full sm:w-auto bg-white/50 border-border/60">
+                  <Button size="lg" variant="outline" className="rounded-full h-14 px-8 text-base w-full sm:w-auto bg-white/50 border-border/60 hover:bg-white hover:text-primary">
                     View Demo Dashboard
                   </Button>
                 </Link>

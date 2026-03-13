@@ -8,6 +8,7 @@ import Landing from "@/pages/Landing";
 import Dashboard from "@/pages/Dashboard";
 import NewTest from "@/pages/NewTest";
 import Results from "@/pages/Results";
+import AdminPanel from "@/pages/AdminPanel";
 
 function Router() {
   return (
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/new-test" component={NewTest} />
       <Route path="/results" component={Results} />
+      <Route path="/admin" component={AdminPanel} />
       <Route component={NotFound} />
     </Switch>
   );
