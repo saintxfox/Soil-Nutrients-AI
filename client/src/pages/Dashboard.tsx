@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from "recharts";
 import { Beaker, TrendingUp, AlertTriangle, ArrowUpRight, Download } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 const npkData = [
   { month: "Jan", N: 45, P: 30, K: 50 },
@@ -22,6 +23,15 @@ const recentTests = [
 ];
 
 export default function Dashboard() {
+  const { toast } = useToast();
+
+  const handleExport = () => {
+    toast({
+      title: "Exporting Report",
+      description: "Your report is being generated and will download shortly.",
+    });
+  };
+
   return (
     <SidebarLayout>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -30,7 +40,7 @@ export default function Dashboard() {
           <p className="text-muted-foreground mt-1">Welcome back. Here is your farm's soil overview.</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="bg-white/50 backdrop-blur-sm border-border/50">
+          <Button variant="outline" className="bg-white/50 backdrop-blur-sm border-border/50" onClick={handleExport}>
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>

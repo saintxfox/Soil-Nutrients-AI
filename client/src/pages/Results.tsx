@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Download, CheckCircle2, AlertTriangle, ArrowLeft, Lightbulb } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 // Mock results
 const results = {
@@ -53,6 +54,15 @@ const Gauge = ({ value, label, color, max = 100 }: { value: number, label: strin
 };
 
 export default function Results() {
+  const { toast } = useToast();
+
+  const handleDownload = () => {
+    toast({
+      title: "Downloading PDF",
+      description: "Your report is being generated and will download shortly.",
+    });
+  };
+
   return (
     <SidebarLayout>
       <div className="mb-6 flex items-center gap-4">
@@ -66,7 +76,7 @@ export default function Results() {
           <p className="text-muted-foreground mt-1">Generated today at 10:45 AM • Confidence Score: {results.confidence}%</p>
         </div>
         <div className="ml-auto">
-          <Button className="shadow-sm">
+          <Button className="shadow-sm" onClick={handleDownload}>
             <Download className="w-4 h-4 mr-2" />
             Download PDF
           </Button>
@@ -126,16 +136,16 @@ export default function Results() {
               "{results.recommendation}"
             </div>
             
-            <div className="bg-black/10 rounded-xl p-4 backdrop-blur-sm border border-white/10 space-y-3">
+            <div className="bg-primary-foreground/10 rounded-xl p-4 backdrop-blur-sm border border-white/20 space-y-3">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-4 h-4 text-yellow-300 shrink-0 mt-0.5" />
-                <p className="text-sm text-green-50 leading-relaxed">
+                <p className="text-sm text-white font-medium leading-relaxed drop-shadow-sm">
                   Phosphorus levels are the primary limiting factor. Ensure precise application near root zones.
                 </p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-4 h-4 text-green-300 shrink-0 mt-0.5" />
-                <p className="text-sm text-green-50 leading-relaxed">
+                <p className="text-sm text-white font-medium leading-relaxed drop-shadow-sm">
                   Potassium levels are sufficient; standard maintenance application is adequate.
                 </p>
               </div>

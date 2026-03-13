@@ -14,12 +14,14 @@ export function SidebarLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background flex flex-col md:flex-row">
       <aside className="w-full md:w-64 bg-card border-r border-border md:min-h-screen p-4 flex flex-col glass z-10 sticky top-0 md:h-screen">
-        <div className="flex items-center gap-3 mb-8 px-2 mt-2">
-          <div className="bg-primary/10 p-2 rounded-xl text-primary">
-            <Leaf className="w-6 h-6" />
-          </div>
-          <h1 className="text-xl font-bold font-display tracking-tight text-foreground">AgroSoil DSS</h1>
-        </div>
+        <Link href="/">
+          <a className="flex items-center gap-3 mb-8 px-2 mt-2 hover:opacity-80 transition-opacity">
+            <div className="bg-primary/10 p-2 rounded-xl text-primary">
+              <Leaf className="w-6 h-6" />
+            </div>
+            <h1 className="text-xl font-bold font-display tracking-tight text-foreground">AgroSoil DSS</h1>
+          </a>
+        </Link>
         
         <nav className="flex-1 space-y-2">
           {links.map((link) => {
